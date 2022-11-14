@@ -44,8 +44,8 @@ class CuentaTest {
         System.out.println("Finalizando el test.");
     }
 
-    @Tag("cuenta")
     @Nested
+    @Tag("cuenta")
     @DisplayName("Probando atributos de la cuenta corriente!")
     class CuentaTestNombreSaldo{
         @Test
@@ -82,8 +82,8 @@ class CuentaTest {
 
     @Nested
     class CuentaOperacionesTest{
-        @Tag("cuenta")
         @Test
+        @Tag("cuenta")
         void testDebitoCuenta() {
             cuenta.debito(new BigDecimal(100));
             assertNotNull(cuenta.getSaldo());
@@ -91,8 +91,9 @@ class CuentaTest {
             assertEquals("900.12345", cuenta.getSaldo().toPlainString());
         }
 
-        @Tag("cuenta")
+
         @Test
+        @Tag("cuenta")
         void testCreditoCuenta() {
             cuenta.credito(new BigDecimal(100));
             assertNotNull(cuenta.getSaldo());
@@ -100,9 +101,9 @@ class CuentaTest {
             assertEquals("1100.12345", cuenta.getSaldo().toPlainString());
         }
 
+        @Test
         @Tag("cuenta")
         @Tag("banco")
-        @Test
         void testTransferirDineroCuentas() {
             Cuenta cuenta1 = new Cuenta("Leonel", new BigDecimal("2500"));
             Cuenta cuenta2 = new Cuenta("Kevin", new BigDecimal("1500.8989"));
@@ -307,8 +308,8 @@ class CuentaTest {
         assertEquals("900.12345", cuenta.getSaldo().toPlainString());
     }
 
-    @Tag("param")
     @Nested
+    @Tag("param")
     class PruebasParametrizadasTest{
         @ParameterizedTest(name = "Número {index} ejecutando con valor {argumentsWithNames}")
         @ValueSource(strings = {"100", "200", "300", "500", "700", "1000.12345"})
@@ -361,9 +362,9 @@ class CuentaTest {
         }
     }
 
-    @Tag("param")
     @ParameterizedTest(name = "Número {index} ejecutando con valor {argumentsWithNames}")
     @MethodSource("montoList")
+    @Tag("param")
     void testDebitoCuentaMethodSource(String monto) {
         cuenta.debito(new BigDecimal(monto));
         assertNotNull(cuenta.getSaldo());
