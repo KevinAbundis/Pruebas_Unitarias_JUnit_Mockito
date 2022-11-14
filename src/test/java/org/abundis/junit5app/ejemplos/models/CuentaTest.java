@@ -44,6 +44,7 @@ class CuentaTest {
         System.out.println("Finalizando el test.");
     }
 
+    @Tag("cuenta")
     @Nested
     @DisplayName("Probando atributos de la cuenta corriente!")
     class CuentaTestNombreSaldo{
@@ -81,6 +82,7 @@ class CuentaTest {
 
     @Nested
     class CuentaOperacionesTest{
+        @Tag("cuenta")
         @Test
         void testDebitoCuenta() {
             cuenta.debito(new BigDecimal(100));
@@ -89,6 +91,7 @@ class CuentaTest {
             assertEquals("900.12345", cuenta.getSaldo().toPlainString());
         }
 
+        @Tag("cuenta")
         @Test
         void testCreditoCuenta() {
             cuenta.credito(new BigDecimal(100));
@@ -97,6 +100,8 @@ class CuentaTest {
             assertEquals("1100.12345", cuenta.getSaldo().toPlainString());
         }
 
+        @Tag("cuenta")
+        @Tag("banco")
         @Test
         void testTransferirDineroCuentas() {
             Cuenta cuenta1 = new Cuenta("Leonel", new BigDecimal("2500"));
@@ -112,6 +117,8 @@ class CuentaTest {
 
 
     @Test
+    @Tag("cuenta")
+    @Tag("error")
     void testDineroInsuficienteExceptionCuenta() {
         Exception exception = assertThrows(DineroInsuficienteException.class, () -> {
             cuenta.debito(new BigDecimal(1500));
@@ -124,6 +131,8 @@ class CuentaTest {
 
 
     @Test
+    @Tag("cuenta")
+    @Tag("banco")
     //@Disabled
     @DisplayName("Probando relaciones entre las cuentas y el banco con assertAll.")
     void testRelacionBancoCuentas() {
@@ -298,6 +307,7 @@ class CuentaTest {
         assertEquals("900.12345", cuenta.getSaldo().toPlainString());
     }
 
+    @Tag("param")
     @Nested
     class PruebasParametrizadasTest{
         @ParameterizedTest(name = "Número {index} ejecutando con valor {argumentsWithNames}")
@@ -351,6 +361,7 @@ class CuentaTest {
         }
     }
 
+    @Tag("param")
     @ParameterizedTest(name = "Número {index} ejecutando con valor {argumentsWithNames}")
     @MethodSource("montoList")
     void testDebitoCuentaMethodSource(String monto) {
