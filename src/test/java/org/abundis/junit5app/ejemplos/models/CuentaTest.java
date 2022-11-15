@@ -21,12 +21,19 @@ import static org.junit.jupiter.api.Assumptions.*;
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CuentaTest {
     Cuenta cuenta;
+    private TestInfo testInfo;
+    private TestReporter testReporter;
 
     @BeforeEach
-    void initMetodoTest(){
+    void initMetodoTest(TestInfo testInfo, TestReporter testReporter){
         this.cuenta = new Cuenta("Leonel", new BigDecimal("1000.12345"));
+        this.testInfo = testInfo;
+        this.testReporter = testReporter;
 
         System.out.println("Iniciando el método.");
+
+        testReporter.publishEntry("Ejecutando: " + testInfo.getDisplayName() + " " + testInfo.getTestMethod().orElse(null).getName()
+                + " con las etiquetas " + testInfo.getTags());
     }
 
     @AfterEach
@@ -51,6 +58,10 @@ class CuentaTest {
         @Test
         @DisplayName("Nombre")
         void testNombreCuenta() {
+            testReporter.publishEntry(testInfo.getTags().toString());
+            if (testInfo.getTags().contains("cuenta")){
+                testReporter.publishEntry("Hacer algo con la etiqueta cuenta");
+            }
 //        cuenta.setPersona("Leonel");
             String esperado = "Leonel";
             String real = cuenta.getPersona();
